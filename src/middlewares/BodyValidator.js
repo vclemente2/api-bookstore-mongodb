@@ -1,3 +1,5 @@
+import ApiError from "../errors/ApiError.js";
+
 class BodyValidator {
   static validate = (schema) => async (req, res, next) => {
     try {
@@ -5,7 +7,7 @@ class BodyValidator {
 
       next();
     } catch (error) {
-      return res.status(422).json({ message: error.message });
+      throw new ApiError(error.message, 422);
     }
   };
 }

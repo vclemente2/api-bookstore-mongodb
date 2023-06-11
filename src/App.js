@@ -1,6 +1,8 @@
+import "express-async-errors";
 import express from "express";
 import Routes from "./routes/Routes.js";
 import Database from "./connection/database.js";
+import ErrorMiddleware from "./middlewares/ErrorMiddleware.js";
 
 class App {
   constructor() {
@@ -13,6 +15,7 @@ class App {
 
     this.app.use(express.json());
     this.app.use(new Routes().getRoutes());
+    this.app.use(ErrorMiddleware.inCaseOfError);
   }
 
   getApp() {

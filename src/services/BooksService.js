@@ -1,76 +1,48 @@
+import ApiError from "../errors/ApiError.js";
 import BooksModel from "../models/BooksModel.js";
 
 class BooksService {
   static async findAllBooks() {
-    try {
-      const books = await BooksModel.find();
+    const books = await BooksModel.find();
 
-      if (!books) throw new Error("Internal error.");
+    if (!books) throw new ApiError("Internal error.", 500);
 
-      return books;
-    } catch (error) {
-      throw new Error("Internal error.");
-    }
+    return books;
   }
 
   static async findBookById(id) {
-    try {
-      const book = await BooksModel.findOne({ _id: id });
+    const book = await BooksModel.findOne({ _id: id });
 
-      if (!book) throw new Error("Book not Found.");
+    if (!book) throw new ApiError("Book not found.", 404);
 
-      return book;
-    } catch (error) {
-      if (error.message === "Book not Found.")
-        throw new Error("Book not Found.");
-
-      throw new Error("Internal Error");
-    }
+    return book;
   }
 
   static async createBook(data) {
-    try {
-      const createdBook = await BooksModel.create(data);
+    const createdBook = await BooksModel.create(data);
 
-      if (!createdBook) throw new Error("Internal Error.");
+    if (!createdBook) throw new ApiError("Internal error.", 500);
 
-      return createdBook;
-    } catch (error) {
-      throw new Error("Internal error.");
-    }
+    return createdBook;
   }
 
   static async updateBook(data, id) {
-    try {
-      const updatedBook = await BooksModel.findByIdAndUpdate(
-        { _id: id },
-        data,
-        { new: true }
-      );
+    const updatedBook = await BooksModel.findByIdAndUpdate({ _id: id }, data, {
+      new: true
+    });
 
-      if (!updatedBook) throw new Error("Not Found.");
+    if (!updatedBook) throw new ApiError("Book not found.", 404);
 
-      return updatedBook;
-    } catch (error) {
-      throw new Error("Not Found.");
-    }
+    return updatedBook;
   }
 
   static async deleteBook(id) {
-    try {
-      const deletedBook = await BooksModel.deleteOne({ _id: id });
-      console.log(deletedBook);
+    const deletedBook = await BooksModel.deleteOne({ _id: id });
 
-      if (!deletedBook) throw new Error("Internal error.");
-      if (!deletedBook.deletedCount) throw new Error("Book not found.");
+    if (!deletedBook) throw new ApiError("Internal error.", 500);
+    if (!deletedBook.deletedCount) throw new ApiError("Book not found.", 404);
 
-      return deletedBook;
-    } catch (error) {
-      if (error.message === "Book not found.")
-        throw new Error("Book not found.");
-
-      throw new Error("Internal error.");
-    }
+    return deletedBook;
   }
 }
 

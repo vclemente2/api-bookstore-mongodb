@@ -1,17 +1,12 @@
 import express from "express";
+import Routes from "./routes/Routes.js";
 
 class App {
   constructor() {
     this.app = express();
 
     this.app.use(express.json());
-    this.app.get("/", (_, res) => {
-      return res.json({
-        version: "1.0.0",
-        description: "Bookstore API",
-        author: "Vinicius Bastos Clemente"
-      });
-    });
+    this.app.use(new Routes().getRoutes());
   }
 
   getApp() {

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import BooksRoute from "./BooksRoute.js";
+import AuthorsRoute from "./AuthorsRoute.js";
 
 class Routes {
   constructor() {
@@ -12,6 +13,7 @@ class Routes {
       });
     });
     this.route.use("/books", new BooksRoute().getRoutes());
+    this.route.use("/authors", new AuthorsRoute().getRoutes());
   }
 
   getRoutes() {

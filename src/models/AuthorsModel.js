@@ -5,3 +5,7 @@ const authorSchema = mongoose.Schema({
   name: { type: String, required: true },
   nationality: { type: String }
 });
+
+const AuthorsModel = mongoose.model("authors", authorSchema);
+
+export default AuthorsModel;

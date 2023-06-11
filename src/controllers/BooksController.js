@@ -29,7 +29,6 @@ class BooksController {
 
       return res.status(201).json(createdBook);
     } catch (error) {
-      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   }
@@ -37,9 +36,9 @@ class BooksController {
   static async update(req, res) {
     const { id } = req.params;
     try {
-      const updated = await BooksService.updateBook(req.body, id);
+      await BooksService.updateBook(req.body, id);
 
-      return res.status(201).json(updated);
+      return res.sendStatus(204);
     } catch (error) {
       return res.status(400).json({ message: error.message });
     }

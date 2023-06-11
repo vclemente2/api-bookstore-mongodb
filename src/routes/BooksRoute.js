@@ -7,19 +7,20 @@ class BooksRoute {
   constructor() {
     this.route = Router();
 
-    this.route.get("/", BooksController.findAll);
-    this.route.get("/:id", BooksController.findOne);
-    this.route.post(
-      "/",
-      BodyValidator.validate(createBookSchema),
-      BooksController.create
-    );
-    this.route.put(
-      "/:id",
-      BodyValidator.validate(updateBookSchema),
-      BooksController.update
-    );
-    this.route.delete("/:id", BooksController.destroy);
+    this.route
+      .get("/", BooksController.findAll)
+      .get("/:id", BooksController.findOne)
+      .post(
+        "/",
+        BodyValidator.validate(createBookSchema),
+        BooksController.create
+      )
+      .put(
+        "/:id",
+        BodyValidator.validate(updateBookSchema),
+        BooksController.update
+      )
+      .delete("/:id", BooksController.destroy);
   }
 
   getRoutes() {

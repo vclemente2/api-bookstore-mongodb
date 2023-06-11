@@ -36,9 +36,9 @@ class BooksController {
   static async update(req, res) {
     const { id } = req.params;
     try {
-      await BooksService.updateBook(req.body, id);
+      const updatedBook = await BooksService.updateBook(req.body, id);
 
-      return res.sendStatus(204);
+      return res.status(200).json(updatedBook);
     } catch (error) {
       return res.status(400).json({ message: error.message });
     }

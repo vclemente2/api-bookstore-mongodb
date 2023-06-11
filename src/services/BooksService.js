@@ -42,24 +42,33 @@ class BooksService {
 
   static async updateBook(data, id) {
     try {
-      const updatedBook = await BooksModel.updateOne({ _id: id }, data);
+      const updatedBook = await BooksModel.findByIdAndUpdate(
+        { _id: id },
+        data,
+        { new: true }
+      );
 
-      if (!updatedBook) throw new Error("Internal Error.");
+      if (!updatedBook) throw new Error("Not Found.");
 
       return updatedBook;
     } catch (error) {
-      throw new Error("Internal error.");
+      throw new Error("Not Found.");
     }
   }
 
   static async deleteBook(id) {
     try {
       const deletedBook = await BooksModel.deleteOne({ _id: id });
+      console.log(deletedBook);
 
-      if (!deletedBook) throw new Error("Internal Error.");
+      if (!deletedBook) throw new Error("Internal error.");
+      if (!deletedBook.deletedCount) throw new Error("Book not found.");
 
       return deletedBook;
     } catch (error) {
+      if (error.message === "Book not found.")
+        throw new Error("Book not found.");
+
       throw new Error("Internal error.");
     }
   }

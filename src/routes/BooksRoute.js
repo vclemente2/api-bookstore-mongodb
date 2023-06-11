@@ -1,18 +1,15 @@
 import { Router } from "express";
-import BooksModel from "../models/BooksModel.js";
+import BooksController from "../controllers/BooksController.js";
 
 class BooksRoute {
   constructor() {
     this.route = Router();
 
-    this.route.get("/", async (req, res) => {
-      try {
-        const books = await BooksModel.find();
-        return res.json(books);
-      } catch (error) {
-        return res.status(400).json({ message: error.message });
-      }
-    });
+    this.route.get("/", BooksController.findAll);
+    this.route.get("/:id", BooksController.findOne);
+    this.route.post("/", BooksController.create);
+    this.route.put("/:id", BooksController.update);
+    this.route.delete("/:id", BooksController.destroy);
   }
 
   getRoutes() {

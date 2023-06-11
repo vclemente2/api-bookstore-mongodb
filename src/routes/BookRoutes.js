@@ -1,11 +1,13 @@
 import { Router } from "express";
+import BookModel from "../models/BookModel.js";
 
 class BookRoutes {
   constructor() {
     this.route = Router();
 
-    this.route.get("/", (req, res) => {
-      res.json({ message: "Olá mundo" });
+    this.route.get("/", async (req, res) => {
+      const books = await BookModel.find();
+      res.json(books);
     });
   }
 

@@ -8,6 +8,6 @@ const bookSchema = new mongoose.Schema({
   pageNumber: { type: Number }
 });
 
-const BookModel = mongoose.model("books", bookSchema);
+const BooksModel = mongoose.model("books", bookSchema);
 
-export default BookModel;
+export default BooksModel;

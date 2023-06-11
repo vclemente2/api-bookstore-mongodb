@@ -1,5 +1,5 @@
 import { Router } from "express";
-import BookRoutes from "./BookRoutes.js";
+import BooksRoute from "./BooksRoute.js";
 
 class Routes {
   constructor() {
@@ -11,7 +11,7 @@ class Routes {
         author: "Vinicius Bastos Clemente"
       });
     });
-    this.route.use("/book", new BookRoutes().getRoutes());
+    this.route.use("/books", new BooksRoute().getRoutes());
   }
 
   getRoutes() {

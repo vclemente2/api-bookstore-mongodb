@@ -3,7 +3,9 @@ import BooksModel from "../models/BooksModel.js";
 
 class BooksService {
   static async findAllBooks() {
-    const books = await BooksModel.find();
+    const books = await BooksModel.find()
+      .populate("author", ["name", "nationality"])
+      .exec();
 
     if (!books) throw new ApiError("Internal error.", 500);
 
@@ -11,7 +13,9 @@ class BooksService {
   }
 
   static async findBookById(id) {
-    const book = await BooksModel.findOne({ _id: id });
+    const book = await BooksModel.findOne({ _id: id })
+      .populate("author", ["name", "nationality"])
+      .exec();
 
     if (!book) throw new ApiError("Book not found.", 404);
 

@@ -2,10 +2,14 @@ import ApiError from "../errors/ApiError.js";
 import BooksModel from "../models/BooksModel.js";
 
 class BooksService {
-  static async findAllBooks() {
-    const books = await BooksModel.find()
-      .populate("author", ["name", "nationality"])
-      .exec();
+  static async findAllBooks(publisher = null) {
+    const books = publisher
+      ? await BooksModel.find({ publisher })
+          .populate("author", ["name", "nationality"])
+          .exec()
+      : await BooksModel.find()
+          .populate("author", ["name", "nationality"])
+          .exec();
 
     if (!books) throw new ApiError("Internal error.", 500);
 

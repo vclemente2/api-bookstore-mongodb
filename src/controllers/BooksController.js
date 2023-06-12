@@ -1,8 +1,10 @@
 import BooksService from "../services/BooksService.js";
 
 class BooksController {
-  static async findAll(_, res) {
-    const books = await BooksService.findAllBooks();
+  static async findAll(req, res) {
+    const { publisher } = req.query;
+
+    const books = await BooksService.findAllBooks(publisher);
 
     return res.json(books);
   }
